@@ -8,7 +8,7 @@ async function main({dryrun = false}): Promise<void> {
     .setDuds('unfldskepic')
     .addBad(1, 't')
     .addBad(0, 't')
-    .addBad(5, 'r')
+    .addBad(5, 'ro')
     ;
   const cmd = wordsy.shell();
   if (dryrun) {

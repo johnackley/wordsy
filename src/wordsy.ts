@@ -8,9 +8,7 @@ export class Wordsy {
 
   constructor (len = 5) {
     this.len = len;
-    for (let n = 0; n < this.len; n++) {
-      this.anchors[n] = '.';
-    }
+    this.anchors = '.'.repeat(len).split('');
   }
 
   public firstIsWild() : boolean {
@@ -49,9 +47,7 @@ export class Wordsy {
 
   public setAnchors(str : string) : Wordsy  {
     this.assertExactForm(str, 'setAnchors');
-    for (let i = 0; i < this.len; i++) {
-      this.anchors[i] = str.charAt(i);
-    }
+    this.anchors = str.split('');
     return this;
   }
 
@@ -62,10 +58,14 @@ export class Wordsy {
     return this;
   }
 
-  public addBad(pos : number, chr : string) : Wordsy {
-    this.assertSingleAlpha(chr, 'bad');
+  public addBad(pos : number, str : string) : Wordsy {
+    this.assertAlphas(str, 'bad');
     this.assertPosBounds(pos, 'bad');
-    this.bads.push('^' + '.'.repeat(pos) + chr + '.'.repeat(this.len - 1 - pos) + '$');
+    if (str.length > 1) {
+      // it's a character class
+      str = `[${str}]`;
+    }
+    this.bads.push('^' + '.'.repeat(pos) + str + '.'.repeat(this.len - 1 - pos) + '$');
     return this;
   }
 
