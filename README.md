@@ -2,11 +2,7 @@
 
 *Wordy* - a wordle-type game guessing tool
 
-# scaffolding: ts-min-scaffold
-
-git@github.com:johnackley/ts-min-scaffold.git
-
-# example shell
+## example shell
 
 ```shell
 for f in `a-z`; do
@@ -15,10 +11,22 @@ for f in `a-z`; do
     # anchors
     egrep '^..s..$' | \
     # duds
-    egrep -v "[A-Z${duds}]" | \
+    egrep -v "[A-Zquiz]" | \
     # bad anchors
     egrep -v '^s|^.t|^..e|t$|e.$' | \
     # floaters
-    egrep 'e|t';
+    egrep 'e' | \
+    egrep 't' \
+    ;
 done
 ```
+
+## cli input
+
+The corresponding Wordsy cli input for the above example is:
+
+`5 ..s.. et quiz s.... .t... ..e.. ...e. ....t`
+
+# colophon
+
+scaffolding: git@github.com:johnackley/ts-min-scaffold.git
