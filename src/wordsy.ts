@@ -11,6 +11,53 @@ export class Wordsy {
     this.anchors = '.'.repeat(len).split('');
   }
 
+  /**
+   * CLI shorthand: "LEN ANCHORS FLOATERS DUDS BAD [BAD...]"
+   * @param str CLI string
+   * @returns this
+   */
+  public cli(str : string) : Wordsy {
+    const words = str.split(' ');
+    if (words.length) {
+      const lenWord = words.shift();
+      if (!lenWord) {
+        throw new Error('word len must be number 1-9');
+      }
+      this.len = Number.parseInt(lenWord);
+    }
+    if (words.length) {
+      const anchWord = words.shift();
+      if (!anchWord) {
+        throw new Error('anchors must be an dots-alphas string');
+      }
+      this.setAnchors(anchWord);
+    }
+    if (words.length) {
+      const floatWord = words.shift();
+      if (!floatWord) {
+        throw new Error('floaters must be an alphas string');
+      }
+      this.setFloaters(floatWord);
+    }
+    if (words.length) {
+      const dudWord = words.shift();
+      if (!dudWord) {
+        throw new Error('duds must be an alphas string');
+      }
+      this.setDuds(dudWord);
+    }
+    // anything left is a list of bads in the form of pos,chrs [...]
+    words.forEach(bad => {
+      const badParts = bad.split(',');
+      if (!badParts || badParts.length !== 2 || !badParts[0] || !badParts[1]) {
+        throw new Error(`bad format for bad: ${bad}`);
+      }
+      const badPos = Number.parseInt(badParts[0]);
+      this.addBad(badPos, badParts[1]);
+    })
+    return this;
+  }
+
   public firstIsWild() : boolean {
     return this.anchors[0] === '.';
   }

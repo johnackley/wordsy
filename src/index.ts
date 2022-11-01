@@ -2,13 +2,15 @@ import { exec } from 'child_process';
 import { Wordsy } from './wordsy';
 
 async function main({dryrun = false}): Promise<void> {
-  const wordsy = new Wordsy(6)
-    .setAnchors('.ro...')
-    .setFloaters('rt')
-    .setDuds('unfldskepic')
-    .addBad(1, 't')
-    .addBad(0, 't')
-    .addBad(5, 'ro')
+  const wordsy = new Wordsy()
+  .cli('5 s...t lit oraeucdnymphvb 0,l 3,ti')
+    // .setAnchors('.ro...')
+    // .setFloaters('oat')
+    // .setDuds('relucidnymphv')
+    // .addBad(0, 'o')
+    // .addBad(1, 'a')
+    // .addBad(2, 'a')
+    // .addBad(3, 't')
     ;
   const cmd = wordsy.shell();
   if (dryrun) {
