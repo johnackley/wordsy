@@ -42,7 +42,7 @@ export class Wordsy {
   }
 
   public assertAlphas(str : string, msg : string) : void {
-    if (!str || str.length > 0 || !/^[a-z]+$/i.test(str)) {
+    if (!str || !/^[a-z]+$/i.test(str)) {
       throw new Error(`${msg} may only be string of alpha chars`);
     }
   }
@@ -78,6 +78,12 @@ export class Wordsy {
   public addFloater(chr : string) : Wordsy {
     this.assertSingleAlpha(chr, 'floater');
     this.floaters.push(chr);
+    return this;
+  }
+
+  public setDuds(str : string) : Wordsy {
+    this.assertAlphas(str, 'setDuds');
+    this.duds = str.split('');
     return this;
   }
 
