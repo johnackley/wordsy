@@ -3,7 +3,8 @@ import { Wordsy } from './wordsy';
 
 async function main({dryrun = false}): Promise<void> {
   const wordsy = new Wordsy()
-  .cli('5 s...t lit oraeucdnymphvb 0,l 3,ti')
+  .cli('5 ..s.. et quiz 0,s 1,t 2,e 3,e 4,t')
+  // .cli('5 s...t lit oraeucdnymphvb 0,l 3,ti')
     // .setAnchors('.ro...')
     // .setFloaters('oat')
     // .setDuds('relucidnymphv')

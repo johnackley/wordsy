@@ -25,7 +25,7 @@ done
 
 The corresponding Wordsy cli input for the above example is:
 
-`5 ..s.. et quiz s.... .t... ..e.. ...e. ....t`
+`5 ..s.. et quiz 0,s 1,t 2,e 3,e 4,t`
 
 # colophon
 
