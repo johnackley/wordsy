@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 export class Wordsy {
   len: number;
@@ -9,8 +9,8 @@ export class Wordsy {
   floaters: string[] = [];
 
   /**
-   * 
-   * @param len 
+   *
+   * @param len
    */
   constructor(len = 5) {
     this.len = len;
@@ -182,7 +182,11 @@ export class Wordsy {
     pipes.push(`egrep '^${this.anchors.join('')}$'`);
 
     // duds & bad anchors
-    pipes.push(`egrep -v '[A-Z${this.duds.join('')}]${this.bads.length > 0 ? '|' : ''}${this.bads.join('|')}'`);
+    pipes.push(
+      `egrep -v '[A-Z${this.duds.join('')}]${
+        this.bads.length > 0 ? '|' : ''
+      }${this.bads.join('|')}'`
+    );
 
     // floaters
     this.floaters.forEach((f) => {
