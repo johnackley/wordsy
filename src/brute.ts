@@ -60,28 +60,24 @@ function hasAllAndOnly(reqSet : Set<number>, opands : number[], opres : OpResult
 }
 
 function mul3(nums : number[]) : OpResult {
-  const x = nums[0];
-  const y = nums[1];
-  const z = nums[2];
-  const res = ((x * 10) + y) * z;
-  return {res, str: `${x}${y}*${z}=${res}`};
+  const x = (10 * nums[0]) + nums[1];
+  const y = nums[2];
+  const res = x * y;
+  return {res, str: `${x}*${y}=${res}`};
 }
 
 function add3(nums : number[]) : OpResult {
-  const x = nums[0];
-  const y = nums[1];
-  const z = nums[2];
-  const res = ((x * 10) + y) + z;
-  return {res, str: `${x}${y}+${z}=${res}`};
+  const x = (10 * nums[0]) + nums[1];
+  const y = nums[2];
+  const res = x + y;
+  return {res, str: `${x}+${y}=${res}`};
 }
 
 function add4(nums : number[]) : OpResult {
-  const w = nums[0];
-  const x = nums[1];
-  const y = nums[2];
-  const z = nums[3];
-  const res = ((w * 10) + x) + ((y * 10) + z);
-  return {res, str: `${w}${x}+${y}${z}=${res}`};
+  const x = (10 * nums[0]) + nums[1];
+  const y = (10 * nums[2]) + nums[3];
+  const res = x + y;
+  return {res, str: `${x}+${y}=${res}`};
 }
 
 function addmul3(nums : number[]) : OpResult {
