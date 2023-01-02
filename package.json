@@ -6,6 +6,7 @@
   "license": "ISC",
   "main": "src/index.js",
   "scripts": {
+    "brute": "ts-node src/brute.ts $*",
     "start": "ts-node src/index.ts $*",
     "test": "jest",
     "lint": "eslint",
