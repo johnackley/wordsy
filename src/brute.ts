@@ -12,8 +12,12 @@ const ops = [
   { num: 3, fun: mul3 },
   { num: 3, fun: add3 },
   { num: 3, fun: addmul3 },
+  { num: 3, fun: muladd3 },
+  { num: 3, fun: divadd3 },
   { num: 3, fun: submul3 },
   { num: 3, fun: mulsub3 },
+  { num: 3, fun: addsub3 },
+  { num: 3, fun: subadd3 },
   { num: 4, fun: add4 },
 ]
 
@@ -90,6 +94,36 @@ function addmul3(nums : number[]) : OpResult {
   return {res, str: `${x}+${y}*${z}=${res}`};
 }
 
+function muladd3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  const res = (x * y) + z;
+  return {res, str: `${x}*${y}+${z}=${res}`};
+}
+
+function adddiv3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  if (z !== 0) {
+    return { res: 0, str: 'DIV-BY-ZERO'};
+  }
+  const res = x + (y / z);
+  return {res, str: `${x}+${y}/${z}=${res}`};
+}
+
+function divadd3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  if (y !== 0) {
+    return { res: 0, str: 'DIV-BY-ZERO'};
+  }
+  const res = (x / y) + z;
+  return {res, str: `${x}/${y}+${z}=${res}`};
+}
+
 function submul3(nums : number[]) : OpResult {
   const x = nums[0];
   const y = nums[1];
@@ -104,6 +138,22 @@ function mulsub3(nums : number[]) : OpResult {
   const z = nums[2];
   const res = (x * y) - z;
   return {res, str: `${x}*${y}-${z}=${res}`};
+}
+
+function subadd3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  const res = x - y + z;
+  return {res, str: `${x}-${y}+${z}=${res}`};
+}
+
+function addsub3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  const res = x + y - z;
+  return {res, str: `${x}+${y}-${z}=${res}`};
 }
 
 const nums : number[] = process.argv.slice(2).map(n => parseInt(n));
