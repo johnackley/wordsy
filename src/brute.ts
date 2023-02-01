@@ -14,6 +14,9 @@ const ops = [
   { num: 3, fun: addmul3 },
   { num: 3, fun: muladd3 },
   { num: 3, fun: divadd3 },
+  { num: 3, fun: divsub3 },
+  { num: 4, fun: divsub4 },
+  { num: 4, fun: divdiv4 },
   { num: 3, fun: submul3 },
   { num: 3, fun: mulsub3 },
   { num: 3, fun: addsub3 },
@@ -106,7 +109,7 @@ function adddiv3(nums : number[]) : OpResult {
   const x = nums[0];
   const y = nums[1];
   const z = nums[2];
-  if (z !== 0) {
+  if (z === 0) {
     return { res: 0, str: 'DIV-BY-ZERO'};
   }
   const res = x + (y / z);
@@ -122,6 +125,39 @@ function divadd3(nums : number[]) : OpResult {
   }
   const res = (x / y) + z;
   return {res, str: `${x}/${y}+${z}=${res}`};
+}
+
+function divsub3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  if (y === 0) {
+    return { res: 0, str: 'DIV-BY-ZERO'};
+  }
+  const res = (x / y) - z;
+  return {res, str: `${x}/${y}-${z}=${res}`};
+}
+
+function divsub4(nums : number[]) : OpResult {
+  const x = (10 * nums[0]) + nums[1];
+  const y = nums[2];
+  const z = nums[3];
+  if (y === 0) {
+    return { res: 0, str: 'DIV-BY-ZERO'};
+  }
+  const res = (x / y) - z;
+  return {res, str: `${x}/${y}-${z}=${res}`};
+}
+
+function divdiv4(nums : number[]) : OpResult {
+  const x = (10 * nums[0]) + nums[1];
+  const y = nums[2];
+  const z = nums[3];
+  if (y === 0 || z === 0) {
+    return { res: 0, str: 'DIV-BY-ZERO'};
+  }
+  const res = (x / y) / z;
+  return {res, str: `${x}/${y}/${z}=${res}`};
 }
 
 function submul3(nums : number[]) : OpResult {
