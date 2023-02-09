@@ -1,5 +1,6 @@
 type OpType = {
   num: number;
+  ops: string;
   fun: (nums : number[]) => OpResult;
 }
 
@@ -9,22 +10,29 @@ type OpResult = {
 }
 
 const ops = [
-  { num: 3, fun: mul3 },
-  { num: 3, fun: add3 },
-  { num: 3, fun: addmul3 },
-  { num: 3, fun: muladd3 },
-  { num: 3, fun: divadd3 },
-  { num: 3, fun: divsub3 },
-  { num: 4, fun: divsub4 },
-  { num: 4, fun: divdiv4 },
-  { num: 3, fun: submul3 },
-  { num: 3, fun: mulsub3 },
-  { num: 3, fun: addsub3 },
-  { num: 3, fun: subadd3 },
-  { num: 4, fun: add4 },
+  { num: 3, ops: '*', fun: mul3 },
+  { num: 3, ops: '+', fun: add3 },
+  { num: 3, ops: '+*', fun: addmul3 },
+  { num: 3, ops: '*+', fun: muladd3 },
+  { num: 3, ops: '*', fun: mulmul3 },
+  { num: 3, ops: '/*', fun: divadd3 },
+  { num: 3, ops: '+/', fun: adddiv3 },
+  { num: 3, ops: '/-', fun: divsub3 },
+  { num: 4, ops: '/-', fun: divsub4 },
+  { num: 4, ops: '/', fun: divdiv4 },
+  { num: 3, ops: '-*', fun: submul3 },
+  { num: 3, ops: '*-', fun: mulsub3 },
+  { num: 3, ops: '+-', fun: addsub3 },
+  { num: 3, ops: '-+', fun: subadd3 },
+  { num: 4, ops: '+', fun: add4 },
 ]
 
-export function brute(nums : number[]) : string[] {
+function allowed(allowedOps: string, op: OpType) : boolean {
+  // return false if op has op that is not in allowed
+  return true;
+}
+
+export function brute(allowedOps : string, nums : number[]) : string[] {
   const ret : string[] = [];
   const numsSet = new Set(nums);
   const len = nums.length;
@@ -33,7 +41,7 @@ export function brute(nums : number[]) : string[] {
     for (let h = 0; h < len; h++) {
       for (let i = 0; i < len; i++) {
         for (let j = 0; j < len; j++) {
-          if (op.num === 3) {
+          if (op.num === 3 && allowed(allowedOps, op)) {
             const opands = [nums[h], nums[i], nums[j]];
             const opres = op.fun(opands);
             if (hasAllAndOnly(numsSet, opands, opres)) {
@@ -41,7 +49,7 @@ export function brute(nums : number[]) : string[] {
             }
           }
           for (let k = 0; k < len; k++) {
-            if (op.num === 4) {
+            if (op.num === 4 && allowed(allowedOps, op)) {
               const opands = [nums[h], nums[i], nums[j], nums[k]];
               const opres = op.fun(opands);
               if (hasAllAndOnly(numsSet, opands, opres)) {
@@ -103,6 +111,14 @@ function muladd3(nums : number[]) : OpResult {
   const z = nums[2];
   const res = (x * y) + z;
   return {res, str: `${x}*${y}+${z}=${res}`};
+}
+
+function mulmul3(nums : number[]) : OpResult {
+  const x = nums[0];
+  const y = nums[1];
+  const z = nums[2];
+  const res = (x * y) * z;
+  return {res, str: `${x}*${y}*${z}=${res}`};
 }
 
 function adddiv3(nums : number[]) : OpResult {
@@ -192,7 +208,8 @@ function addsub3(nums : number[]) : OpResult {
   return {res, str: `${x}+${y}-${z}=${res}`};
 }
 
-const nums : number[] = process.argv.slice(2).map(n => parseInt(n));
-console.log(`bruting: ${nums}`);
-const res = brute(nums);
+const allowedOps = process.argv[2];
+const nums : number[] = process.argv.slice(3).map(n => parseInt(n));
+console.log(`bruting with '${allowedOps}': ${nums}`);
+const res = brute('-*/', nums);
 console.log(res.join('\n'));
