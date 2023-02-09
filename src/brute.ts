@@ -1,7 +1,16 @@
-type OpType = {
+class OpType {
   num: number;
   ops: string;
   fun: (nums : number[]) => OpResult;
+  constructor(num: number, ops: string, fun: (nums : number[]) ) {
+    this.num = num;
+    this.ops = ops;
+    this.fun = fun;
+  }
+  public allowed(allowedOps: string) : boolean {
+    // return false if op has op that is not in allowed
+    return true;
+  }
 }
 
 type OpResult = {
@@ -9,28 +18,23 @@ type OpResult = {
   str: string;
 }
 
-const ops = [
-  { num: 3, ops: '*', fun: mul3 },
-  { num: 3, ops: '+', fun: add3 },
-  { num: 3, ops: '+*', fun: addmul3 },
-  { num: 3, ops: '*+', fun: muladd3 },
-  { num: 3, ops: '*', fun: mulmul3 },
-  { num: 3, ops: '/*', fun: divadd3 },
-  { num: 3, ops: '+/', fun: adddiv3 },
-  { num: 3, ops: '/-', fun: divsub3 },
-  { num: 4, ops: '/-', fun: divsub4 },
-  { num: 4, ops: '/', fun: divdiv4 },
-  { num: 3, ops: '-*', fun: submul3 },
-  { num: 3, ops: '*-', fun: mulsub3 },
-  { num: 3, ops: '+-', fun: addsub3 },
-  { num: 3, ops: '-+', fun: subadd3 },
-  { num: 4, ops: '+', fun: add4 },
+const ops : OpType[] = [
+  new OpType(3, '*', mul3),
+  new OpType(3, '*', mulmul3),
+  new OpType(3, '*+', muladd3),
+  new OpType(3, '*-', mulsub3),
+  new OpType(3, '+', add3),
+  new OpType(3, '+*', addmul3),
+  new OpType(3, '+-', addsub3),
+  new OpType(3, '+/', adddiv3),
+  new OpType(3, '-*', submul3),
+  new OpType(3, '-+', subadd3),
+  new OpType(3, '/*', divadd3),
+  new OpType(3, '/-', divsub3),
+  new OpType(4, '+', add4),
+  new OpType(4, '/', divdiv4),
+  new OpType(4, '/-', divsub4),
 ]
-
-function allowed(allowedOps: string, op: OpType) : boolean {
-  // return false if op has op that is not in allowed
-  return true;
-}
 
 export function brute(allowedOps : string, nums : number[]) : string[] {
   const ret : string[] = [];
@@ -41,7 +45,7 @@ export function brute(allowedOps : string, nums : number[]) : string[] {
     for (let h = 0; h < len; h++) {
       for (let i = 0; i < len; i++) {
         for (let j = 0; j < len; j++) {
-          if (op.num === 3 && allowed(allowedOps, op)) {
+          if (op.num === 3 && op.allowed(allowedOps)) {
             const opands = [nums[h], nums[i], nums[j]];
             const opres = op.fun(opands);
             if (hasAllAndOnly(numsSet, opands, opres)) {
@@ -49,7 +53,7 @@ export function brute(allowedOps : string, nums : number[]) : string[] {
             }
           }
           for (let k = 0; k < len; k++) {
-            if (op.num === 4 && allowed(allowedOps, op)) {
+            if (op.num === 4 && op.allowed(allowedOps)) {
               const opands = [nums[h], nums[i], nums[j], nums[k]];
               const opres = op.fun(opands);
               if (hasAllAndOnly(numsSet, opands, opres)) {
