@@ -2,7 +2,7 @@ class OpType {
   num: number;
   ops: string;
   fun: (nums : number[]) => OpResult;
-  constructor(num: number, ops: string, fun: (nums : number[]) ) {
+  constructor(num: number, ops: string, fun: (nums : number[]) => OpResult) {
     this.num = num;
     this.ops = ops;
     this.fun = fun;
@@ -215,5 +215,5 @@ function addsub3(nums : number[]) : OpResult {
 const allowedOps = process.argv[2];
 const nums : number[] = process.argv.slice(3).map(n => parseInt(n));
 console.log(`bruting with '${allowedOps}': ${nums}`);
-const res = brute('-*/', nums);
+const res = brute(allowedOps, nums);
 console.log(res.join('\n'));
