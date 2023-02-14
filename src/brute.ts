@@ -213,6 +213,10 @@ function addsub3(nums : number[]) : OpResult {
 }
 
 const allowedOps = process.argv[2];
+if (!allowedOps.match(/[\/\*\+-]+/)) {
+  console.log('usage: run brute [ops] dig [dig...]');
+  process.exit();
+}
 const nums : number[] = process.argv.slice(3).map(n => parseInt(n));
 console.log(`bruting with '${allowedOps}': ${nums}`);
 const res = brute(allowedOps, nums);
