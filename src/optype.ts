@@ -39,6 +39,7 @@ export class OpType {
             x = `((a[${argn}]*100) + (a[${argn+1}]*10) + a[${argn+2}])`;
             break;
         }
+        stmts.push(`if (a[${argn}] === 0) { return null; }`); // kick out leading zeroes
         stmts.push(`let x${argn} = ${x};`);
         fnexp += `x${argn}`;
         strexp += `\${x${argn}}`;
@@ -63,20 +64,34 @@ export class OpType {
   }
 }
 
-export function buildOps(ops : string[]) : OpType[] {
+export function buildOps(equalPos : number, ops : string[]) : OpType[] {
   const ret : OpType[] = [];
   // TODO combinations
   for (let i = 0; i < ops.length; i++) {
     const oi = ops[i];
-    ret.push(new OpType(`3${oi}2`));
-    ret.push(new OpType(`3${oi}1`));
-    ret.push(new OpType(`2${oi}2`));
-    ret.push(new OpType(`2${oi}1`));
+    switch (equalPos) {
+    case 7:
+      ret.push(new OpType(`3${oi}2`));
+      break;
+    case 6:
+      ret.push(new OpType(`3${oi}1`));
+      ret.push(new OpType(`2${oi}2`));
+      break;
+    case 5:      
+      ret.push(new OpType(`2${oi}1`));
+      break;
+    }
     for (let j = 0; j < ops.length; j++) {
       const oj = ops[j];
-      ret.push(new OpType(`2${oi}1${oj}1`));
-      ret.push(new OpType(`1${oi}2${oj}1`));
-      ret.push(new OpType(`1${oi}1${oj}1`));
+      switch (equalPos) {
+      case 7:
+        ret.push(new OpType(`2${oi}1${oj}1`));
+        ret.push(new OpType(`1${oi}2${oj}1`));
+        break;
+      case 6:
+        ret.push(new OpType(`1${oi}1${oj}1`));
+        break;
+      }
     }
   }
   return ret;

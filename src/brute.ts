@@ -2,11 +2,11 @@
 
 import { buildOps, OpResult, OpType } from './optype';
 
-export function brute(allowedOpsArg : string, nums : number[]) : string[] {
+export function brute(equalPos : number, allowedOpsArg : string, nums : number[]) : string[] {
   const allowedOps = new Set<string>();
   const opsAry = allowedOpsArg.split('');
   opsAry.forEach(s => allowedOps.add(s));
-  const ops = buildOps(opsAry);
+  const ops = buildOps(equalPos, opsAry);
 
   const ret : string[] = [];
   const numsSet = new Set(nums);
@@ -17,7 +17,7 @@ export function brute(allowedOpsArg : string, nums : number[]) : string[] {
         ops.filter(o => o.totDigs === 3).forEach(op => {
           const opands = [nums[h], nums[i], nums[j]];
           const opres = op.fn(opands);
-          if (hasAllAndOnly(numsSet, opands, opres)) {
+          if (opres && hasAllAndOnly(numsSet, opands, opres)) {
             ret.push(opres.str);
           }
         });
@@ -25,7 +25,7 @@ export function brute(allowedOpsArg : string, nums : number[]) : string[] {
           ops.filter(o => o.totDigs === 4).forEach(op => {
             const opands = [nums[h], nums[i], nums[j], nums[k]];
             const opres = op.fn(opands);
-            if (hasAllAndOnly(numsSet, opands, opres)) {
+            if (opres && hasAllAndOnly(numsSet, opands, opres)) {
               ret.push(opres.str);
             }
           });
