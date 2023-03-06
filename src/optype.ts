@@ -20,7 +20,7 @@ export class OpType {
     let fnexp = '';
     let strexp = '';
     let argn = 0;
-    let x, s;
+    let x : string;
     const stmts : string[] = [];
     things.forEach(t => {
       if (/^\d$/.test(t)) {
