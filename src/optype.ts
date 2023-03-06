@@ -66,12 +66,18 @@ export class OpType {
 export function buildOps(ops : string[]) : OpType[] {
   const ret : OpType[] = [];
   // TODO combinations
-  ops.forEach(opstr => { ret.push(new OpType(`3${opstr}2`)); });
-  ops.forEach(opstr => { ret.push(new OpType(`3${opstr}1`)); });
-  ops.forEach(opstr => { ret.push(new OpType(`2${opstr}2`)); });
-  ops.forEach(opstr => { ret.push(new OpType(`2${opstr}1`)); });
-  ops.forEach(opstr => { ret.push(new OpType(`2${opstr}1${opstr}1`)); });
-  ops.forEach(opstr => { ret.push(new OpType(`1${opstr}2${opstr}1`)); });
-  ops.forEach(opstr => { ret.push(new OpType(`1${opstr}1${opstr}1`)); });
+  for (let i = 0; i < ops.length; i++) {
+    const oi = ops[i];
+    ret.push(new OpType(`3${oi}2`));
+    ret.push(new OpType(`3${oi}1`));
+    ret.push(new OpType(`2${oi}2`));
+    ret.push(new OpType(`2${oi}1`));
+    for (let j = 0; j < ops.length; j++) {
+      const oj = ops[j];
+      ret.push(new OpType(`2${oi}1${oj}1`));
+      ret.push(new OpType(`1${oi}2${oj}1`));
+      ret.push(new OpType(`1${oi}1${oj}1`));
+    }
+  }
   return ret;
 }
