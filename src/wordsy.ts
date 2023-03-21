@@ -9,7 +9,7 @@ export class Wordsy {
   floaters: string[] = [];
 
   /**
-   *
+   * constructor only takes len, build up with action methods.
    * @param len
    */
   constructor(len = 5) {
@@ -31,18 +31,11 @@ export class Wordsy {
   public cli(argv: string | string[]): Wordsy {
     const args = typeof argv === 'string' ? argv.split(' ') : argv;
     if (args.length) {
-      const lenWord = args.shift();
-      if (!lenWord) {
-        throw new Error('');
+      const lenOrAnchorsWord = args.shift();
+      if (!lenOrAnchorsWord) {
+        throw new Error('lenOrAnchors must be either a number or a regex');
       }
-      this.len = Number.parseInt(lenWord);
-    }
-    if (args.length) {
-      const anchWord = args.shift();
-      if (!anchWord) {
-        throw new Error('anchors must be an dots-alphas string');
-      }
-      this.setAnchors(anchWord);
+      this.setLenAndAnchors(lenOrAnchorsWord);
     }
     if (args.length) {
       const floatWord = args.shift();
@@ -74,6 +67,19 @@ export class Wordsy {
     return this;
   }
 
+  /**
+   * interpret arg as either a length: number or anchors : regex
+   */
+  public setLenAndAnchors(arg : string) : void {
+    this.len = Number.parseInt(arg);
+    if (!Number.isNaN(this.len)) {
+      this.anchors = this.defaultWildcards();
+    } else {
+      this.len = arg.length;
+      this.setAnchors(arg);
+    }
+  }
+
   public firstIsWild(): boolean {
     return this.anchors[0] === '.';
   }
@@ -91,18 +97,7 @@ export class Wordsy {
   }
 
   public assertExactForm(str: string, msg: string): void {
-    if (!str) {
-      throw new Error(
-        `${msg} must be '-' or a string containing alphas or '.' exactly ${this.len} long`
-      );
-    }
-    if (str === '-') {
-      return;
-    }
-    if (str.length !== this.len) {
-      throw new Error(`${msg} len must be exactly ${this.len}`);
-    }
-    if (!str.match(/[a-z.]+/)) {
+    if (!str || !/^[a-z.]+$/i.test(str)) {
       throw new Error(
         `${msg} must be a string containing alphas or '.' exactly ${this.len} long`
       );
