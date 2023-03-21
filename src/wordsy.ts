@@ -19,32 +19,33 @@ export class Wordsy {
 
   /**
    * CLI shorthand: "LEN ANCHORS [FLOATERS [DUDS [BAD [BAD...]]]]"
-   * LEN is a number, usually 5 (for wordle variants) or 6 (for scholardle)
-   * ANCHORS is either '-' or a regex of dots (wildcards) and alphas whose correct location is known e.g. '..z..'
+   * LEN | ANCHORS where:
+   *   LEN is a number, usually 5 (for wordle variants) or 6 (for scholardle)
+   *   ANCHORS is either '-' or a regex of dots (wildcards) and alphas whose correct location is known e.g. '..z..'
    * FLOATERS is either '-' or string of alphas exist in solution but not at correct location yet e.g. nsto
    * DUDS is either '-' or string of alphas that do not exist in the solution e.g. nsto
    * each BAD is comma-separated tuple of 0-based index, string of alphas that are wrong location e.g. 0,et 4,zg
    * @param str CLI string
    * @returns this
    */
-  public cli(arg: string | string[]): Wordsy {
-    const words = typeof arg === 'string' ? arg.split(' ') : arg;
-    if (words.length) {
-      const lenWord = words.shift();
+  public cli(argv: string | string[]): Wordsy {
+    const args = typeof argv === 'string' ? argv.split(' ') : argv;
+    if (args.length) {
+      const lenWord = args.shift();
       if (!lenWord) {
-        throw new Error('word len must be number 1-9');
+        throw new Error('');
       }
       this.len = Number.parseInt(lenWord);
     }
-    if (words.length) {
-      const anchWord = words.shift();
+    if (args.length) {
+      const anchWord = args.shift();
       if (!anchWord) {
         throw new Error('anchors must be an dots-alphas string');
       }
       this.setAnchors(anchWord);
     }
-    if (words.length) {
-      const floatWord = words.shift();
+    if (args.length) {
+      const floatWord = args.shift();
       if (!floatWord) {
         throw new Error('floaters must be an alphas string');
       }
@@ -52,8 +53,8 @@ export class Wordsy {
         this.setFloaters(floatWord);
       }
     }
-    if (words.length) {
-      const dudWord = words.shift();
+    if (args.length) {
+      const dudWord = args.shift();
       if (!dudWord) {
         throw new Error('duds must be an alphas string');
       }
@@ -62,7 +63,7 @@ export class Wordsy {
       }
     }
     // anything left is a list of bads in the form of pos,chrs [...]
-    words.forEach((bad) => {
+    args.forEach((bad) => {
       const badParts = bad.split(',');
       if (!badParts || badParts.length !== 2 || !badParts[0] || !badParts[1]) {
         throw new Error(`bad format for bad: ${bad}`);
