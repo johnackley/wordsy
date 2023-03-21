@@ -18,8 +18,8 @@ export class Wordsy {
   }
 
   /**
-   * CLI shorthand: "LEN ANCHORS [FLOATERS [DUDS [BAD [BAD...]]]]"
-   * LEN | ANCHORS where:
+   * CLI shorthand: "(LEN | ANCHORS) [FLOATERS [DUDS [BAD [BAD...]]]]"
+   * (LEN | ANCHORS) where:
    *   LEN is a number, usually 5 (for wordle variants) or 6 (for scholardle)
    *   ANCHORS is either '-' or a regex of dots (wildcards) and alphas whose correct location is known e.g. '..z..'
    * FLOATERS is either '-' or string of alphas exist in solution but not at correct location yet e.g. nsto
