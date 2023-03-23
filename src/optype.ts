@@ -87,6 +87,7 @@ export function buildOps(equalPos : number, ops : string[]) : OpType[] {
       case 7:
         ret.push(new OpType(`2${oi}1${oj}1`));
         ret.push(new OpType(`1${oi}2${oj}1`));
+        ret.push(new OpType(`1${oi}1${oj}2`));
         break;
       case 6:
         ret.push(new OpType(`1${oi}1${oj}1`));
