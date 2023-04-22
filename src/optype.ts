@@ -66,9 +66,7 @@ export class OpType {
 
 export function buildOps(equalPos : number, ops : string[]) : OpType[] {
   const ret : OpType[] = [];
-  // TODO combinations
-  for (let i = 0; i < ops.length; i++) {
-    const oi = ops[i];
+  for (let oi in ops) {
     switch (equalPos) {
     case 7:
       ret.push(new OpType(`3${oi}2`));
@@ -81,8 +79,7 @@ export function buildOps(equalPos : number, ops : string[]) : OpType[] {
       ret.push(new OpType(`2${oi}1`));
       break;
     }
-    for (let j = 0; j < ops.length; j++) {
-      const oj = ops[j];
+    for (let oj in ops) {
       switch (equalPos) {
       case 7:
         ret.push(new OpType(`2${oi}1${oj}1`));
