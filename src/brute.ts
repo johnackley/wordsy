@@ -29,6 +29,15 @@ export function brute(equalPos : number, allowedOpsArg : string, nums : number[]
               ret.push(opres.str);
             }
           });
+          for (let l = 0; l < len; l++) {
+            ops.filter(o => o.totDigs === 5).forEach(op => {
+              const opands = [nums[h], nums[i], nums[j], nums[k], nums[l]];
+              const opres = op.fn(opands);
+              if (opres && hasAllAndOnly(numsSet, opands, opres)) {
+                ret.push(opres.str);
+              }
+            });
+          }  
         }
       }
     }
