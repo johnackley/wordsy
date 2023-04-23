@@ -1,4 +1,5 @@
 import { brute } from './brute';
+import { OpResult } from './optype';
 
 
 /**
@@ -14,10 +15,12 @@ export function main() {
     console.log('usage: run brute equalpos allowedops dig [dig...]');
     process.exit();
   }
-  const nums : number[] = process.argv.slice(4).map(n => parseInt(n));
-  console.log(`bruting [${equalsPos}:${allowedOps}]: ${nums}`);
-  const res = brute(equalsPos, allowedOps, nums);
-  console.log(res.join('\n'));
+  const digs = new Set<number>(process.argv.slice(4).map(Number));
+  console.log(`bruting [${equalsPos}:${allowedOps}]:`, digs);
+  const opresults : OpResult[] = brute(equalsPos, allowedOps, digs);
+  opresults.forEach((r : OpResult) => {
+    console.log(r.str);
+  });
 }
 
 main();
