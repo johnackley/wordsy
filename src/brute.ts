@@ -14,7 +14,7 @@ export function brute(equalPos : number, allowedOpsArg : string, digs : Set<numb
         ops.filter(o3 => o3.totDigs === 3).forEach(op3 => {
           const opands = [h, i, j].map((ix) => nums[ix]);
           const t = op3.fn(opands);
-          if (t.str.length === 8) {
+          if (t && t.str.length === 8) {
             const opres : OpResult = new OpResult(t);
             if (opres && opres.hasAllAndOnly(digs)) {
               ret.push(opres);
@@ -25,7 +25,7 @@ export function brute(equalPos : number, allowedOpsArg : string, digs : Set<numb
           ops.filter(o4 => o4.totDigs === 4).forEach(op4 => {
             const opands = [h, i, j, k].map((ix) => nums[ix]);
             const t = op4.fn(opands);
-            if (t.str.length === 8) {
+            if (t && t.str.length === 8) {
               const opres : OpResult = new OpResult(t);
               if (opres && opres.hasAllAndOnly(digs)) {
                 ret.push(opres);
@@ -36,7 +36,7 @@ export function brute(equalPos : number, allowedOpsArg : string, digs : Set<numb
             ops.filter(o5 => o5.totDigs === 5).forEach(op5 => {
               const opands = [h, i, j, k, l].map((ix) => nums[ix]);
               const t = op5.fn(opands);
-              if (t.str.length === 8) {
+              if (t && t.str.length === 8) {
                 const opres : OpResult = new OpResult(t);
                 if (opres && opres.hasAllAndOnly(digs)) {
                   ret.push(opres);
